@@ -8,9 +8,9 @@
 
 <ion-content [fullscreen]="true">
 
-  <ion-card *ngFor="let message of getMessages()">
-    <ion-card-content *ngIf="message.imageURL">
-      <ion-img src="{{message.imageURL}}"></ion-img>
+  <ion-card *ngFor="let message of displayMessage">
+    <ion-card-content *ngIf="message.imageUrl">
+      <ion-img src="{{message.imageUrl}}"></ion-img>
     </ion-card-content>
     <ion-card-header>
       <ion-card-subtitle>
@@ -18,7 +18,10 @@
       </ion-card-subtitle>
       <ion-card-title>
         {{message.from}}
+        <br>
+        <span>{{message.createdOn | date:'MMMM/dd/yyyy hh:mm' }}</span>
       </ion-card-title>
+      
     </ion-card-header>
   </ion-card>
 

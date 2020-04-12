@@ -17,7 +17,7 @@ export class Tab2Page {
   onPost(){
 
     this.message.from = this.shared.userName;
-    this.message.createOn = new Date();
+    this.message.createdOn = new Date();
 
     this.data.saveMessage(this.message);
 
