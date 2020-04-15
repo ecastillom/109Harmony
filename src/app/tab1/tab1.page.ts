@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { DataService } from '../services/data.service';
 import { Message } from '../models/messages';
+import { SharedService } from '../services/shared.service';
+import { messaging } from 'firebase';
 
 @Component({
   selector: 'app-tab1',
@@ -11,11 +13,24 @@ export class Tab1Page {
 
   displayMessage: Message[];
 
-  constructor(private data: DataService) {
+  constructor(private data: DataService, private shared: SharedService) {
     this.homework();
     data.getAllMessages().subscribe(list =>{
-      console.log(list);
-      this.displayMessage = list.sort((left,right)=>{
+
+      var filtered = [];
+      
+      for(let i = 0; i<list.length; i++){
+        var Mess = list[i];
+
+        if(Mess.to == "General" || Mess.to == shared.userName || Mess.from == shared.userName){
+          filtered.push(Mess);
+          console.log(Mess);
+        }
+
+      }
+
+
+      this.displayMessage = filtered.sort((left,right)=>{
 
         if(!left.createdOn)
         return -1;
@@ -120,6 +135,30 @@ export class Tab1Page {
     
   
     console.log(data)
+
+    var itemsAge = [];
+    itemsAge = data.sort((left,right)=>{
+
+        if(!left.age)
+        return -1;
+
+        if(left.age > right.age){
+          return 1;
+        }
+        else if(right.age > left.age){
+          return -1;
+        }
+
+        return 0;
+      });
+
+      console.log(itemsAge)
+
+     // 1 - Sort items by Age Desc
+    // 2 - Sort items by Age Asc
+    // 3 - Print only actives
+    // 4 - Sum all the balances
+
   }
 
 

@@ -7,6 +7,33 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
+  <ion-card>
+    <ion-card-content>
 
-  <app-explore-container name="Tab 3 page"></app-explore-container>
+      <ion-item>
+        <ion-label position="stacked">
+          Friend Name:
+        </ion-label>
+        <ion-input [(ngModel)] ="friend.name" name="txtName"></ion-input>
+      </ion-item>
+      
+
+      <ion-button (click)="onSave()" expand="block" class="main-button">
+        Register
+      </ion-button>
+      
+    </ion-card-content>  
+
+  </ion-card>
+
+  <ion-card>
+    <ion-list>
+      <ion-item *ngFor="let friend of myFriends">
+        <ion-icon name="person-outline"></ion-icon>
+        <ion-label>{{friend.name}}</ion-label>
+        <!-- <ion-icon name="person-outline"></ion-icon>
+        {{friend.name}} -->
+      </ion-item>
+    </ion-list>
+  </ion-card>
 </ion-content>

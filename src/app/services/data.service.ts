@@ -5,6 +5,7 @@ import { map } from  'rxjs/operators'
 import { firestore } from 'firebase';
 
 import { AngularFirestoreCollection, AngularFirestore } from 'angularfire2/firestore';
+import { Friend } from '../models/friends';
 
 @Injectable({
   providedIn: 'root'
@@ -14,9 +15,13 @@ export class DataService {
   allMessages: Observable<Message[]>;
   messageCollection: AngularFirestoreCollection<Message>;
 
+  allFriends: Observable<Friend[]>;
+  friendCollection: AngularFirestoreCollection<Friend>;
+
   constructor(private fb: AngularFirestore) {
     this.messageCollection = fb.collection<Message>('posts');
 
+    this.friendCollection = fb.collection<Friend>('friends');
    }
 
   // La mejor forma de leer la info de la BD
@@ -39,6 +44,10 @@ export class DataService {
     );
   }
 
+  retrieveFriendsFromDB(){
+    this.allFriends = this.friendCollection.valueChanges();
+  }
+
 
   public saveMessage(message){
     var plain = Object.assign({},message);
@@ -52,5 +61,15 @@ export class DataService {
 
     this.retrieveMessagesFromDB();
     return this.allMessages;
+  }
+
+  public saveFriend(friend){
+    var plain = Object.assign({},friend);
+    this.friendCollection.add(plain);
+  }
+
+  public getAllFriends(){
+    this.retrieveFriendsFromDB();
+    return this.allFriends;
   }
 }
